@@ -1,7 +1,6 @@
 let playerName = prompt("Enter name here: ");
-if (playerName){
-    let newplayerName = playerName.charAt(0).toUpperCase() + playerName.slice(1).toLowerCase();
-}
+
+let newPlayerName = playerName.charAt(0).toUpperCase() + playerName.slice(1).toLowerCase();
 
 let answer = 0;
 let guessCount = 0;
@@ -25,7 +24,7 @@ function play (){
         }
         levels[i].disabled = true;
     }
-    document.getElementById("msg").textContent = playerName + "Guess a number 1-" + range;
+    document.getElementById("msg").textContent = newPlayerName + ", guess a number 1-" + range;
     answer = Math.floor(Math.random()*range)+1;
     guessCount = 0;
 
@@ -42,13 +41,19 @@ function makeGuess(){
     }
     guessCount++;
     if(guess === answer){
-        msg.textContent= "Correct! It took " + guessCount + " tries.";
+        msg.textContent= "You are correct " + newPlayerName + "! It took " + guessCount + " tries."; 
         updateScore(guessCount);
         resetGame();
     }
-    else if (guess < answer){
-        msg.textContent="Too low, try again."
+
+    else if (Math.abs(guess - answer) <=2){
+        msg.textContent = "You are getting hotter, 
     }
+    else if (Math.abs(guess - answer) <=5){
+        msg.textContent = "Getting warmer!"
+        if ()
+    }
+    
     else{
         msg.textContent = "Too high, try again."
     }
