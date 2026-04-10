@@ -5,5 +5,3 @@ Why it improves the game: it creates better user accessibility so they don't hav
 2. Confetti when +1 win
 where it is: linked the external script in index.html, line 75 in js
 Why it improves the game: it gives nice visuals and prompts the player to play again
-
-3. 
