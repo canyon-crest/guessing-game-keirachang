@@ -34,30 +34,38 @@ function play (){
 }
 
 function makeGuess(){
-    let guess = parseInt(document.getElementById("guess").value);
+    let guess = parseInt(document.getElementById('guess').value);
+    let msg = document.getElementById('msg');
+    
     if (isNaN(guess)||guess<1){
         msg.textContent = "Please enter a valid number";
         return;
     }
+    
     guessCount++;
+    let diff = Math.abs(guess - answer);
+
     if(guess === answer){
-        msg.textContent= "You are correct " + newPlayerName + "! It took " + guessCount + " tries."; 
+        msg.textContent= "You are correct " + newPlayerName + "! It took " + guessCount + " tries.";
         updateScore(guessCount);
         resetGame();
+    } 
+    // Hotter: distance is 2 or less
+    else if(diff <= 2){
+        msg.textContent = "You are getting hotter! Try a " + (guess < answer ? "higher" : "lower") + " number.";
     }
-
-    else if (Math.abs(guess - answer) <=2){
-        msg.textContent = "You are getting hotter, 
+    // Warmer: distance is 5 or less
+    else if (diff <= 5){
+        msg.textContent = "Getting warmer, still too " + (guess < answer ? "low" : "high");
     }
-    else if (Math.abs(guess - answer) <=5){
-        msg.textContent = "Getting warmer!"
-        if ()
-    }
-    
-    else{
-        msg.textContent = "Too high, try again."
+    // Colder: distance is greater than 5
+    else {
+        msg.textContent = "Getting colder...and still too " + (guess < answer ? "low" : "high");
     }
 }
+
+
+
 
 function updateScore(score){
     scores.push(score);
