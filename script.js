@@ -1,4 +1,3 @@
-// 6. Player Name (Prompt and Format)
 let playerName = prompt("Enter name here:");
 let newPlayerName = playerName.charAt(0).toUpperCase() + playerName.slice(1).toLowerCase();
 
@@ -9,16 +8,13 @@ let range = 0;
 const scores = [];
 const times = [];
 
-// 2. Event Listeners (No inline onclick)
 document.getElementById("playBtn").addEventListener("click", play);
 document.getElementById("guessBtn").addEventListener("click", makeGuess);
 document.getElementById("giveUpBtn").addEventListener("click", giveUp);
 
-// 11. Live Time (Update every second)
 setInterval(updateDateTime, 1000);
 updateDateTime(); // Initial call
 
-// 10. Date with Month Names and Suffixes
 function updateDateTime() {
     const now = new Date();
     const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
@@ -26,7 +22,6 @@ function updateDateTime() {
     const year = now.getFullYear();
     const date = now.getDate();
     
-    // Day Suffix Logic
     let suffix = "th";
     if (date % 10 === 1 && date !== 11) suffix = "st";
     else if (date % 10 === 2 && date !== 12) suffix = "nd";
@@ -36,7 +31,6 @@ function updateDateTime() {
     document.getElementById("date").textContent = `${month} ${date}${suffix}, ${year} - ${timeStr}`;
 }
 
-// 3. Play Button
 function play() {
     let levels = document.getElementsByName("level");
     range = 0;
@@ -51,7 +45,13 @@ function play() {
 
     answer = Math.floor(Math.random() * range) + 1;
     guessCount = 0;
-    startTime = new Date().getTime(); // 12. Start Timer
+    startTime = new Date().getTime(); 
+
+    document.getElementById("guess").addEventListener("keypress", function (e){
+    if (e.key === "Enter"){
+        document.getElementById("guessBtn").click();
+    }
+});
 
     document.getElementById("msg").textContent = newPlayerName + ", guess a number 1-" + range;
     document.getElementById("guessBtn").disabled = false;
@@ -59,7 +59,6 @@ function play() {
     document.getElementById("playBtn").disabled = true;
 }
 
-// 4 & 5. Guessing with Feedback + Hot/Warm/Cold
 function makeGuess() {
     let guess = parseInt(document.getElementById("guess").value);
     let msg = document.getElementById("msg");
@@ -73,11 +72,11 @@ function makeGuess() {
     if (guess === answer) {
         msg.textContent = "Correct " + newPlayerName + "! It took " + guessCount + " tries.";
         endRound(guessCount);
+        confetti();
     } else {
-        // High/Low Check
+        
         let direction = guess < answer ? "low" : "high";
         
-        // Temperature Check
         let temp = "";
         if (diff <= 2) temp = "hot";
         else if (diff <= 5) temp = "warm";
@@ -87,10 +86,9 @@ function makeGuess() {
     }
 }
 
-// 9. Give Up
 function giveUp() {
-    document.getElementById("msg").textContent = "The number was " + answer + ".";
-    endRound(range); // Score becomes the range value
+    document.getElementById("msg").textContent = "The number was " + answer + ". Better luck next time!";
+    endRound(range); 
 }
 
 function endRound(finalScore) {
@@ -100,7 +98,6 @@ function endRound(finalScore) {
     reset();
 }
 
-// 7 & 8. Wins, Average, and Leaderboard
 function updateScore(score) {
     scores.push(score);
     document.getElementById("wins").textContent = "Total wins: " + scores.length;
@@ -115,7 +112,6 @@ function updateScore(score) {
     }
 }
 
-// 12. Round Timer Logic
 function updateTimers(elapsedMs) {
     let seconds = elapsedMs / 1000;
     times.push(seconds);
@@ -127,7 +123,6 @@ function updateTimers(elapsedMs) {
     document.getElementById("avgTime").textContent = "Avg Time: " + avgTime.toFixed(1) + "s";
 }
 
-// Reset function required by rubric
 function reset() {
     document.getElementById("guess").value = "";
     document.getElementById("guessBtn").disabled = true;
@@ -137,3 +132,4 @@ function reset() {
     let levels = document.getElementsByName("level");
     levels.forEach(l => l.disabled = false);
 }
+
